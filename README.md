@@ -8,7 +8,7 @@ Our activities will consist of the gamification of real-time, IoT-enhanced energ
 Access requires a valid Sparkworks account (see [Configuration](#Configuration))
 
 ## Installation
-You can install gaianodes directly using the editor i.e. the web interface. To do this select Manage Palette from the menu (top right), and then select the install tab in the palette. You can now search for new nodes to install, just type *gaianode* and select **node-red-contrib-gaianode update**. After a while the new nodes will appear in the left panel under the group *Gaia*.
+You can install gaianodes directly using the editor i.e. the web interface. To do this select Manage Palette from the menu (top right), and then select the install tab in the palette. You can now search for new nodes to install, just type *gaianode* and select **node-red-contrib-gaianode**. After a while the new nodes will appear in the left panel under the group *Gaia*.
 
 Otherwise you can install gaianodes within your user data directory (by default, %HOME%/.node-red) by typing:
 ```
@@ -164,7 +164,7 @@ Retrieves the list of available resources given a site identifier
 Connects to the GAIA platform to receive real time measurements as soon as they are pushed to the platform
 
 #### Parameters
-- **Path*: the path of the school/area to monitor (e.g. *ROOT.GAIA.GROUPS.155076* where **155076** is the site id of the school)
+- **Path**: the path of the school/area to monitor (e.g. *ROOT.GAIA.GROUPS.155076* where **155076** is the site id of the school)
 - **Gaia Server**: a configured Gaia Server
 
 #### Output
