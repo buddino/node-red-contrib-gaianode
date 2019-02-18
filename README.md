@@ -223,6 +223,9 @@ From this moment you will find this server in the dropdown menu of each Gaia nod
 Paramters can be configured in the node configuration typing its id (e.g. *155076*) or, where specified, by using mustache-style tags (e.g. *{{msg.payload.id}}* or *{{msg.payload.resource}}* for accessing the fields of the input message). It is also possible to configure the timestamp associated with the value by using the *Time* field in the node configuration; you can use mustache-style tags for accessing the field of the message to be used as timestamp (e.g. {{msg.payload.timestamp}} ).
 
 [Mustache](https://mustache.github.io/)
+
 [Gaia API](https://api.sparkworks.net/swagger-ui.html#/)
+
 [Gaia Android Application](https://play.google.com/store/apps/details?id=eu.gaiaproject.android.companion) Android >= 7.0
+
 [Gaia Android Virtual Sensor](https://play.google.com/store/apps/details?id=com.ionicframework.gaia_euproject_psapplication) 
