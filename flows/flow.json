@@ -1,0 +1,476 @@
+[
+  {
+    "id": "2697fca6.4a1fa4",
+    "type": "tab",
+    "label": "Flow 1",
+    "disabled": false,
+    "info": ""
+  },
+  {
+    "id": "fe84c8a1.106708",
+    "type": "board-config",
+    "z": "",
+    "board": "GrovePi"
+  },
+  {
+    "id": "bcf6850.6815a78",
+    "type": "ui_tab",
+    "z": "",
+    "name": "Home",
+    "icon": "dashboard"
+  },
+  {
+    "id": "4794dcf5.6c7b64",
+    "type": "ui_group",
+    "z": "",
+    "name": "Default",
+    "tab": "bcf6850.6815a78",
+    "disp": false,
+    "width": "16",
+    "collapse": false
+  },
+  {
+    "id": "48b1314f.fe30e",
+    "type": "ui_base",
+    "theme": {
+      "name": "theme-dark",
+      "lightTheme": {
+        "default": "#0094CE",
+        "baseColor": "#0094CE",
+        "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+        "edited": true,
+        "reset": false
+      },
+      "darkTheme": {
+        "default": "#097479",
+        "baseColor": "#357012",
+        "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+        "edited": true,
+        "reset": false
+      },
+      "customTheme": {
+        "name": "Untitled Theme 1",
+        "default": "#4B7930",
+        "baseColor": "#4B7930",
+        "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+      },
+      "themeState": {
+        "base-color": {
+          "default": "#097479",
+          "value": "#357012",
+          "edited": true
+        },
+        "page-titlebar-backgroundColor": {
+          "value": "#357012",
+          "edited": false
+        },
+        "page-backgroundColor": {
+          "value": "#111111",
+          "edited": false
+        },
+        "page-sidebar-backgroundColor": {
+          "value": "#000000",
+          "edited": false
+        },
+        "group-textColor": {
+          "value": "#54b21d",
+          "edited": false
+        },
+        "group-borderColor": {
+          "value": "#555555",
+          "edited": false
+        },
+        "group-backgroundColor": {
+          "value": "#333333",
+          "edited": false
+        },
+        "widget-textColor": {
+          "value": "#eeeeee",
+          "edited": false
+        },
+        "widget-backgroundColor": {
+          "value": "#357012",
+          "edited": false
+        },
+        "widget-borderColor": {
+          "value": "#333333",
+          "edited": false
+        },
+        "base-font": {
+          "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+        }
+      }
+    },
+    "site": {
+      "name": "GAIA Dashboard",
+      "hideToolbar": "true",
+      "allowSwipe": "false",
+      "allowTempTheme": "true",
+      "dateFormat": "DD/MM/YYYY",
+      "sizes": {
+        "sx": 48,
+        "sy": 48,
+        "gx": 6,
+        "gy": 6,
+        "cx": 6,
+        "cy": 6,
+        "px": 0,
+        "py": 0
+      }
+    }
+  },
+  {
+    "id": "9e2125b7.986a68",
+    "type": "grove lcdrgb output",
+    "z": "2697fca6.4a1fa4",
+    "name": "LCD",
+    "board": "fe84c8a1.106708",
+    "pin": "1",
+    "x": 1310,
+    "y": 480,
+    "wires": []
+  },
+  {
+    "id": "40b33956.b46858",
+    "type": "function",
+    "z": "2697fca6.4a1fa4",
+    "name": "Set Token",
+    "func": "token = msg.payload.access_token;\nflow.set(\"token\", token);\nconsole.debug(\"Token set to: \"+token)",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 100,
+    "y": 280,
+    "wires": [
+      [
+        "dd609c6f.0cb13"
+      ]
+    ],
+    "inputLabels": [
+      "3"
+    ]
+  },
+  {
+    "id": "dc5e77b4.9e0e98",
+    "type": "http request",
+    "z": "2697fca6.4a1fa4",
+    "name": "Authentication",
+    "method": "POST",
+    "ret": "obj",
+    "url": "https://sso.sparkworks.net/aa/oauth/token",
+    "tls": "",
+    "x": 120,
+    "y": 220,
+    "wires": [
+      [
+        "40b33956.b46858"
+      ]
+    ]
+  },
+  {
+    "id": "a3699670.f88b18",
+    "type": "function",
+    "z": "2697fca6.4a1fa4",
+    "name": "Set Headers",
+    "func": "msg.headers = {};\nmsg.headers['Content-type'] = 'application/x-www-form-urlencoded';\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 110,
+    "y": 160,
+    "wires": [
+      [
+        "dc5e77b4.9e0e98"
+      ]
+    ]
+  },
+  {
+    "id": "fc77157.d5dc5e8",
+    "type": "http request",
+    "z": "2697fca6.4a1fa4",
+    "name": "Get Resource",
+    "method": "GET",
+    "ret": "obj",
+    "url": "https://api.sparkworks.net/v1/resource/{{{resource}}}/summary",
+    "tls": "",
+    "x": 580,
+    "y": 300,
+    "wires": [
+      [
+        "e18072df.c50a7"
+      ]
+    ]
+  },
+  {
+    "id": "e18072df.c50a7",
+    "type": "function",
+    "z": "2697fca6.4a1fa4",
+    "name": "getLatest",
+    "func": "if(msg.statusCode > 200){\n    node.error(\"Unauthorized\", msg);\n}\n\nvar options = { timeZone: 'Europe/Rome', timeZoneName: 'short' };\nvalue = msg.payload.latest;\ntime = msg.payload.latestTime;\nvar date = new Date(time);\ntime = date.toLocaleTimeString('it-IT',options);\nmsg = {}\nmsg['payload'] = {\n    value: value,\n    time: time\n}\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 760,
+    "y": 300,
+    "wires": [
+      [
+        "ce71e289.23882",
+        "3352f69a.72b82a"
+      ]
+    ]
+  },
+  {
+    "id": "dd609c6f.0cb13",
+    "type": "function",
+    "z": "2697fca6.4a1fa4",
+    "name": "Set Token Header",
+    "func": "let token = flow.get(\"token\");\nmsg.chatId = msg.payload.chatId;\nmsg.headers = {};\nmsg.headers['authorization'] = 'Bearer ' + token;\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 330,
+    "y": 440,
+    "wires": [
+      [
+        "673c11fd.de059"
+      ]
+    ],
+    "inputLabels": [
+      "3"
+    ]
+  },
+  {
+    "id": "6b132f2d.fdf7c",
+    "type": "inject",
+    "z": "2697fca6.4a1fa4",
+    "name": "",
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "repeat": "60",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 110,
+    "y": 440,
+    "wires": [
+      [
+        "dd609c6f.0cb13"
+      ]
+    ]
+  },
+  {
+    "id": "ce71e289.23882",
+    "type": "function",
+    "z": "2697fca6.4a1fa4",
+    "name": "Formatter",
+    "func": "let value = msg.payload.value;\nlet time = msg.payload.time;\nlet payload = {\n    text: \"Hall lux: \"+Number(value).toFixed(0)+\"\\n\"+time,\n}\nmsg.payload = payload;\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 840,
+    "y": 220,
+    "wires": [
+      [
+        "251f5379.a1858c"
+      ]
+    ]
+  },
+  {
+    "id": "3352f69a.72b82a",
+    "type": "function",
+    "z": "2697fca6.4a1fa4",
+    "name": "Formatter",
+    "func": "msg.payload = msg.payload.value;\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 660,
+    "y": 420,
+    "wires": [
+      [
+        "3413d24a.9a320e",
+        "4d0446bd.43e668"
+      ]
+    ]
+  },
+  {
+    "id": "3413d24a.9a320e",
+    "type": "ui_chart",
+    "z": "2697fca6.4a1fa4",
+    "name": "",
+    "group": "4794dcf5.6c7b64",
+    "order": 0,
+    "width": 0,
+    "height": 0,
+    "label": "Luminosity",
+    "chartType": "line",
+    "legend": "false",
+    "xformat": "HH:mm:ss",
+    "interpolate": "linear",
+    "nodata": "Waiting for data",
+    "dot": false,
+    "ymin": "0",
+    "ymax": "2000",
+    "removeOlder": "6",
+    "removeOlderPoints": "",
+    "removeOlderUnit": "3600",
+    "cutout": 0,
+    "useOneColor": false,
+    "colors": [
+      "#d20005",
+      "#aec7e8",
+      "#ff7f0e",
+      "#2ca02c",
+      "#98df8a",
+      "#d62728",
+      "#ff9896",
+      "#9467bd",
+      "#c5b0d5"
+    ],
+    "useOldStyle": false,
+    "x": 1310,
+    "y": 420,
+    "wires": [
+      [],
+      []
+    ]
+  },
+  {
+    "id": "a2ce23af.3ec2b",
+    "type": "catch",
+    "z": "2697fca6.4a1fa4",
+    "name": "",
+    "scope": [
+      "e18072df.c50a7"
+    ],
+    "x": 90,
+    "y": 40,
+    "wires": [
+      [
+        "c87f74f9.867f08"
+      ]
+    ]
+  },
+  {
+    "id": "c87f74f9.867f08",
+    "type": "function",
+    "z": "2697fca6.4a1fa4",
+    "name": "Set Credentials",
+    "func": "let credentials = {};\ncredentials.client_id=\"gaia-prato\";\ncredentials.client_secret=\"27d7ecb0-4563-4815-95c8-98f55899b852\";\ncredentials.grant_type=\"password\"\ncredentials.password=\"cmRxm2\";\ncredentials.scope = \"read\";\ncredentials.username=\"gaia-prato\"\nmsg.payload = credentials;\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 120,
+    "y": 100,
+    "wires": [
+      [
+        "a3699670.f88b18"
+      ]
+    ]
+  },
+  {
+    "id": "673c11fd.de059",
+    "type": "function",
+    "z": "2697fca6.4a1fa4",
+    "name": "Set Resource",
+    "func": "msg.resource = 155601;\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 560,
+    "y": 240,
+    "wires": [
+      [
+        "fc77157.d5dc5e8"
+      ]
+    ]
+  },
+  {
+    "id": "4d0446bd.43e668",
+    "type": "range",
+    "z": "2697fca6.4a1fa4",
+    "minin": "0",
+    "maxin": "2000",
+    "minout": "0",
+    "maxout": "110",
+    "action": "clamp",
+    "round": true,
+    "property": "payload",
+    "name": "",
+    "x": 850,
+    "y": 520,
+    "wires": [
+      [
+        "49b3a633.9bbec8"
+      ]
+    ]
+  },
+  {
+    "id": "9b6b831f.531ec",
+    "type": "color-convert",
+    "z": "2697fca6.4a1fa4",
+    "input": "hsl",
+    "output": "rgb",
+    "outputType": "array",
+    "x": 870,
+    "y": 640,
+    "wires": [
+      [
+        "8f398e13.0046a"
+      ]
+    ]
+  },
+  {
+    "id": "49b3a633.9bbec8",
+    "type": "function",
+    "z": "2697fca6.4a1fa4",
+    "name": "Formatter",
+    "func": "h = msg.payload;\ns = 100;\nl = 50;\nmsg.payload = [h,s,l];\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 860,
+    "y": 580,
+    "wires": [
+      [
+        "9b6b831f.531ec"
+      ]
+    ]
+  },
+  {
+    "id": "251f5379.a1858c",
+    "type": "join",
+    "z": "2697fca6.4a1fa4",
+    "name": "",
+    "mode": "custom",
+    "build": "merged",
+    "property": "payload",
+    "propertyType": "msg",
+    "key": "topic",
+    "joiner": "\\n",
+    "joinerType": "str",
+    "accumulate": false,
+    "timeout": "",
+    "count": "2",
+    "reduceRight": false,
+    "reduceExp": "",
+    "reduceInit": "",
+    "reduceInitType": "",
+    "reduceFixup": "",
+    "x": 1150,
+    "y": 580,
+    "wires": [
+      [
+        "9e2125b7.986a68"
+      ]
+    ]
+  },
+  {
+    "id": "8f398e13.0046a",
+    "type": "function",
+    "z": "2697fca6.4a1fa4",
+    "name": "Formatter",
+    "func": "rgb =  msg.payload;\nmsg = {payload: {rgb: rgb}};\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 860,
+    "y": 700,
+    "wires": [
+      [
+        "251f5379.a1858c"
+      ]
+    ]
+  }
+]

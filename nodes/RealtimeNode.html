@@ -1,0 +1,69 @@
+<script type="text/javascript">
+    RED.nodes.registerType('RealTime', {
+        category: 'Gaia',
+        color: '#92a95a',
+        defaults: {
+            name: {value: ""},
+            path: {value: "", required: true},
+            server: {value: "", type: "gaia-server"}
+        },
+        inputs: 0,
+        outputs: 1,
+        icon: "websocket.png",
+        label: function () {
+            if (this.name)
+                return this.name + ":" + this.resource;
+            else
+                return "RealTime";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="RealTime">
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-path"><i class="fa fa-thermometer-half"></i> Path</label>
+        <input type="text" id="node-input-path" placeholder="ROOT.GAIA.GROUPS.155076">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-server"><i class="fa fa-server"></i> Gaia Server</label>
+        <input type="number" id="node-input-server" placeholder="Server">
+    </div>
+
+</script>
+
+<script type="text/html" data-help-name="RealTime">
+    <p>Connects to the GAIA platform for receiving real time date pushed to it</p>
+
+    <h3>Parameters</h3>
+    <dl class="message-properties">
+        <dt>Path <span class="property-type">string</span></dt>
+        <dd> the path of the school/area </dd>
+    </dl>
+
+    <h3>Outputs</h3>
+
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">object</span></dt>
+        <dd>The message received by the platform forwarded in real-time without post processing:</dd>
+        <ul>
+            <li><code>timestamp</code> - The Timestamp of the measurement in milliseconds (UNIX time)</li>
+            <li><code>resourceUri</code> - URI of the resource</li>
+            <li><code>value</code> - Value read by the sensor</li>
+        </ul>
+    </dl>
+
+
+    <h3>Details</h3>
+    <p>This node needs a valid GAIA-server configuration</p>
+
+    <h3>References</h3>
+    <ul>
+        <li><a href="https://api.sparkworks.net/swagger-ui.html#/">GAIA API</a> - used in this node</li>
+    </ul></script>

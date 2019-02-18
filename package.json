@@ -1,0 +1,26 @@
+{
+  "name": "node-red-contrib-gaianode",
+  "version": "1.6.2",
+  "description": "Set of nodes for interfacing with the GAIA Platform",
+  "license": "CC BY 3.0",
+  "keywords": [ "node-red" ],
+  "dependencies": {
+    "mustache": "^3.0.0",
+    "request": "latest",
+    "sockjs-client": "^1.3.0",
+    "stompjs": "^2.3.3"
+  },
+  "node-red": {
+    "nodes": {
+      "LatestValueNode": "nodes/LatestValueNode.js",
+      "TimerangeNode": "nodes/TimerangeNode.js",
+      "PushValueNode": "nodes/PushValueNode.js",
+      "SummaryNode": "nodes/SummaryNode.js",
+      "RealtimeNode": "nodes/RealtimeNode.js",
+      "ListResourcesNode": "nodes/ListResourcesNode.js",
+      "NotificationsNode": "nodes/NotificationsNode.js",
+      "Uri2Id": "nodes/Uri2Id.js",
+      "config": "config/gaia-server.js"
+    }
+  }
+}

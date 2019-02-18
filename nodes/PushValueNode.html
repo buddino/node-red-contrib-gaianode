@@ -1,0 +1,50 @@
+<script type="text/javascript">
+    RED.nodes.registerType('PushValue', {
+        category: 'Gaia',
+        color: '#5fa965',
+        defaults: {
+            name: {value: ""},
+            resource: {value: "", required: true},
+            time: {value: "", required: false},
+            server: {value: "", type: "gaia-server"}
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "push.png",
+        align: 'right',
+        label: function () {
+            if (this.name)
+                return this.name + ":" + this.resource;
+            else
+                return "PushValue:" + this.resource;
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="PushValue">
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-resource"><i class="fa fa-thermometer-half"></i> Resource</label>
+        <input type="text" id="node-input-resource" placeholder="ID or {{msg.resource}}">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-time"><i class="fa fa-clock-o"></i> Time</label>
+        <input type="text" id="node-input-time" placeholder="{{msg.time}} if empty now">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-server"><i class="fa fa-server"></i> Gaia Server</label>
+        <input type="number" id="node-input-server" placeholder="Server">
+    </div>
+
+</script>
+
+<script type="text/x-red" data-help-name="PushValue">
+    <p>msg.payload must contain the value to be pushed (e.g. 23.62)</p>
+</script>

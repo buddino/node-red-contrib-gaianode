@@ -1,0 +1,110 @@
+<script type="text/javascript">
+    RED.nodes.registerType('Timerange', {
+        category: 'Gaia',
+        color: '#92a95a',
+        defaults: {
+            name: {value: ""},
+            resource: {value: "", required: true},
+            from: {value: "", required: true},
+            granularity: {value: "5min", required: true},
+            to: {value: new Date().toISOString().substring(0, 19), required: true},
+            server: {value: "", type: "gaia-server"}
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "timerange.png",
+        label: function () {
+            if (this.name)
+                return this.name + ":" + this.resource;
+            else
+                return "TimeRange:" + this.resource;
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="Timerange">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-resource"><i class="fa fa-thermometer-half"></i> Resource</label>
+        <input type="text" id="node-input-resource" placeholder="ID or {{msg.payload}}">
+    </div>
+
+        <div class="form-row">
+        <label for="node-input-resource"><i class="fa fa-calendar"></i> From</label>
+        <input type="datetime-local" id="node-input-from">
+    </div>
+
+            <div class="form-row">
+        <label for="node-input-resource"><i class="fa fa-calendar"></i> To</label>
+        <input type="datetime-local" id="node-input-to">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-granularity"><i class="fa fa-clock-o"></i>Granularity</label>
+        <select name="node-input-granularity" id="node-input-granularity">
+            <option value="5min" selected>5 Minutes</option><option value="hour">Hour</option><option value="day">Day</option><option value="month">Month</option><option value="year">Year</option>
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-server"><i class="fa fa-server"></i> Gaia Server</label>
+        <input type="number" id="node-input-server" placeholder="Server">
+    </div>
+
+
+
+
+</script>
+
+<script type="text/html" data-help-name="Timerange">
+   <p>Retireves the values of the given resource within the specified time window</p>
+
+   <h3>Parameters</h3>
+   <dl class="message-properties">
+       <li><code>Resource id</code> - can be a numerid id or a mustache-style string (e.g. {{msg.payload}})</li>
+       <li><code>From</code> - a date and time or a mustache-style string (e.g. {{msg.payload.from}})</li>
+       <li><code>To</code> - a date and time or a mustache-style string (e.g. {{msg.payload.to}})</li>
+       <li><code>Granularity</code> - the interval between queried values (5 minutes, 1 hour, 1 day, 1 month)</li>
+       <li><code>Gaia Server</code> -  a configured Gaia Server</li>
+   </dl>
+
+    <h3>Outputs</h3>
+
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">object</span></dt>
+        <dd>is a dictionary whose key are the ids of the requested resources <i>(right now only one resource is supported)</i></dd>
+        <ul>
+            <li><code>average</code> - Average of the values in the time range</li>
+            <li><code>summary</code> - Sum of the values in the time range</li>
+            <li>
+                <dl class="message-properties">
+                    <dt>data <span class="property-type">array</span></dt>
+                    <dd>Array of measurements. Each element contains:</dd>
+                    <ul>
+                        <li><code>reading</code> - measurement value</li>
+                        <li><code>timestamp</code> - UNIX timestamp of the reading (milliseconds)</li>
+                    </ul>
+                </dl>
+            </li>
+        </ul>
+        <dt>topic <span class="property-type">number</span></dt>
+        <dd>The id of the queried resource</dd>
+    </dl>
+
+
+    <h3>Details</h3>
+    <p>The queried resource can be configured node writing directly its id (e.g. <code>155076</code>)
+        or by using mustache-style tags (e.g. <code>{{msg.payload.id}}</code> or <code>{{msg.payload.resource}}</code> for accessing the fields of the input
+        message)
+    </p>
+    <p>This node needs a valid GAIA-server configuration</p>
+
+    <h3>References</h3>
+    <ul>
+        <li><a href="https://api.sparkworks.net/swagger-ui.html#/">GAIA API</a> - used in this node</li>
+    </ul>
+</script>

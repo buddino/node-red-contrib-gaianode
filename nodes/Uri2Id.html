@@ -1,0 +1,66 @@
+<script type="text/javascript">
+    RED.nodes.registerType('Uri2Id', {
+        category: 'Gaia',
+        color: '#92a95a',
+        defaults: {
+            name: {value: ""},
+            resource: {value: "", required: true},
+            server: {value: "", type: "gaia-server"}
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "hash.png",
+        label: function () {
+            if (this.name)
+                return this.name + ":" + this.resource;
+            else
+                return "Get id:" + this.resource;
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="Uri2Id">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-resource"><i class="fa fa-thermometer-half"></i> Resource</label>
+        <input type="text" id="node-input-resource" placeholder="gaia-prato/gw1/QG/actpw">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-server"><i class="fa fa-server"></i> Gaia Server</label>
+        <input type="number" id="node-input-server" placeholder="Server">
+    </div>
+
+
+</script>
+
+<script type="text/html" data-help-name="Uri2Id">
+    <p>Convert the given URI into a numeric resource id to be used in queries</p>
+
+    <h3>Parameters</h3>
+    <dl class="message-properties">
+        TODO
+    </dl>
+
+    <h3>Outputs</h3>
+
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>The numeric id of the resource</dd>
+    </dl>
+
+    <h3>Details</h3>
+    <p>The queried resource URI can be configured within the node configuration or by using mustache-style tags (e.g. <code>{{msg.payload.uri}}</code>, <code>{{msg.payload.resource}}</code> for accessing the fields of the input
+        message)
+    </p>
+    <p>This node needs a valid GAIA-server configuration</p>
+
+    <h3>References</h3>
+    <ul>
+        <li><a href="https://api.sparkworks.net/swagger-ui.html#/">GAIA API</a> - used in this node</li>
+    </ul>
+</script>

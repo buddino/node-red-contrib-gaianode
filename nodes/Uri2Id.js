@@ -1,0 +1,55 @@
+module.exports = function (RED) {
+    let auth = require('../lib/auth');
+    let utils = require("../lib/utils");
+
+    function Uri2Id(config) {
+        RED.nodes.createNode(this, config);
+        this.server = RED.nodes.getNode(config.server);
+        this.resource = config.resource;
+        this.onMessage = onMessage;
+        let node = this;
+        this.on('input', function (msg) {
+            this.msg = msg;
+            this.uri = utils.parseMustache(node, this.resource);
+            this.status({fill: "yellow", shape: "dot", text: "Converting: " + this.uri});
+            onMessage(this);
+        });
+
+        this.on('close', function (done) {
+            node.status({});
+            done();
+        });
+    }
+
+    function onMessage(node) {
+        let url = node.server.api + "resource/uri/" + node.uri;
+        //console.log("Node " + node.id + " requesting resource " + node.uri);
+        let request = auth.getAuthenticatedHttp(node);
+        request.get(url, function (error, resp, body) {
+            if (error) {
+                node.status({fill: "red", shape: "dot", text: "Connection error"});
+                node.error(error);
+                return;
+            }
+            if (resp.statusCode === 200) {
+                node.status({fill: "green", shape: "dot", text: "success at " + new Date().toLocaleTimeString()});
+                let id = JSON.parse(body).resourceId;
+                let payload = {...node.msg.payload, id: id};
+                node.send({payload: payload, topic: node.uri});
+            }
+            else if (resp.statusCode === 404) {
+                node.status({fill: "yellow", shape: "dot", text: "Resource " + node.uri + " not found"});
+                node.error(resp.statusCode, node.msg);
+            }
+            else if (resp.statusCode === 401) {
+                auth.authenticate(node);
+            }
+            else {
+                console.error(body);
+                node.error(resp, node.msg);
+            }
+        });
+    }
+
+    RED.nodes.registerType("Uri2Id", Uri2Id);
+};

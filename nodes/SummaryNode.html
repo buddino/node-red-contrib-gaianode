@@ -1,0 +1,114 @@
+<script type="text/javascript">
+    RED.nodes.registerType('Summary', {
+        category: 'Gaia',
+        color: '#92a95a',
+        defaults: {
+            name: {value: ""},
+            resource: {value: "", required: true},
+            server: {value: "", type: "gaia-server"}
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "summary.png",
+        label: function () {
+            if(this.name)
+                return this.name+":"+this.resource;
+            else
+                return "Summary:"+this.resource;
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="Summary">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-resource"><i class="fa fa-thermometer-half"></i> Resource</label>
+        <input type="text" id="node-input-resource" placeholder="ID or {{...}}">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-server"><i class="fa fa-server"></i> Gaia Server</label>
+        <input type="number" id="node-input-server" placeholder="Server">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="Summary">
+    <p>Retrieves the summary for the given resource id from the GAIA Platform</p>
+
+    <h3>Parameters</h3>
+    <dl class="message-properties">
+        TODO
+    </dl>
+
+
+    <h3>Outputs</h3>
+
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">object</span></dt>
+        <dd>contains:</dd>
+        <ul>
+            <li><code>keyName</code> - Literal identifier of the resource</li>
+            <li><code>latestTime</code> - The Timestamp of the measurement in milliseconds (UNIX time)</li>
+            <li><code>latest</code> - The latest value measured</li>
+            <li><code>minutes5</code> - Array containing the latest 48 values at 5 minutes interval</li>
+            <li><code>minutes60</code> - Array containing the latest 48 values at one hour interval</li>
+            <li><code>day</code> - Array containing the latest 48 values at one day interval</li>
+            <li><code>month</code> - Array containing the latest 48 values at one month interval</li>
+            <li>
+                <dl class="message-properties">
+                <dt>max <span class="property-type">object</span></dt>
+                <dd>Contains the maximum value of the latest:</dd>
+                <ul>
+                    <li><code>minutes5</code> - 5 minutes</li>
+                    <li><code>minutes60</code> - hour</li>
+                    <li><code>day</code> - day</li>
+                    <li><code>month</code> - month</li>
+                </ul>
+                </dl>
+            </li>
+            <li>
+                <dl class="message-properties">
+                    <dt>min <span class="property-type">object</span></dt>
+                    <dd>Contains the minimum value of the latest:</dd>
+                    <ul>
+                        <li><code>minutes5</code> - 5 minutes</li>
+                        <li><code>minutes60</code> - hour</li>
+                        <li><code>day</code> - day</li>
+                        <li><code>month</code> - month</li>
+                    </ul>
+                </dl>
+            </li>
+            <li>
+                <dl class="message-properties">
+                    <dt>average <span class="property-type">object</span></dt>
+                    <dd>Contains the average value of the latest:</dd>
+                    <ul>
+                        <li><code>minutes5</code> - 5 minutes</li>
+                        <li><code>minutes60</code> - hour</li>
+                        <li><code>day</code> - day</li>
+                        <li><code>month</code> - month</li>
+                    </ul>
+                </dl>
+            </li>
+        </ul>
+        <dt>topic <span class="property-type">number</span></dt>
+        <dd>The id of the queried resource</dd>
+    </dl>
+
+
+    <h3>Details</h3>
+    <p>The queried resource can be configured node writing directly its id (e.g. <code>155076</code>)
+        or by using mustache-style tags (e.g. <code>{{msg.payload.id}}</code> or <code>{{msg.payload.resource}}</code> for accessing the fields of the input
+        message)
+    </p>
+    <p>This node needs a valid GAIA-server configuration</p>
+
+    <h3>References</h3>
+    <ul>
+        <li><a href="https://api.sparkworks.net/swagger-ui.html#/">GAIA API</a> - used in this node</li>
+    </ul>
+</script>

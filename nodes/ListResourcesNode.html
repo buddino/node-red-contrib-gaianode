@@ -1,0 +1,84 @@
+<script type="text/javascript">
+    RED.nodes.registerType('ListResources', {
+        category: 'Gaia',
+        color: '#92a95a',
+        defaults: {
+            name: {value: ""},
+            site: {value: "", required: true},
+            server: {value: "", type: "gaia-server"}
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "resources.png",
+        label: function () {
+            if(this.name)
+                return this.name+":"+this.site;
+            else
+                return "Resources in:"+this.site;
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="ListResources">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-site"><i class="fa fa-thermometer-half"></i> Site</label>
+        <input type="number" id="node-input-site" placeholder="Site">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-server"><i class="fa fa-server"></i> Gaia Server</label>
+        <input type="text" id="node-input-server" placeholder="Server">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="ListResources">
+    <p>Retrieves the list of available resources given a site identifier</p>
+
+    <h3>Parameters</h3>
+    <dl class="message-properties">
+        TODO
+    </dl>
+
+    <h3>Outputs</h3>
+
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">object</span></dt>
+        <dd>contains:</dd>
+        <ul>
+            <li>
+                <dl class="message-properties">
+                <dt>resources <span class="property-type">array</span></dt>
+                <dd>An array of resources (sensors in this case) each one composed by:</dd>
+                <ul>
+                    <li><code>resourceId</code> - The numeric id of the resource</li>
+                    <li><code>uri</code> - The URI of the resource</li>
+                    <li><code>name</code> - The name of the resource</li>
+                    <li><code>isa</code> - the type of resource (e.g., sensor)</li>
+                    <li><code>property</code> - Measured property (e.g., Temperature, Luminosity)</li>
+                    <li><code>uom</code> - Unit of measurement (e.g., Wh, A, Raw)</li>
+                </ul>
+                </dl>
+            </li>
+        </ul>
+        <dt>options <span class="property-type">array</span></dt>
+        <dd>An array of key-value couple. The key is the URI of the resource and the value id the numeric id. This is usefull for creating selection widgets (e.g., for letting hte user choose in the GUI the resource to be read)</dd>
+    </dl>
+
+
+    <h3>Details</h3>
+    <p>The queried site can be configured node writing directly its id (e.g. <code>155076</code>)
+        or by using mustache-style tags (e.g. <code>{{msg.payload.id}}</code> or <code>{{msg.payload.site}}</code> for accessing the fields of the input
+        message)
+    </p>
+    <p>This node needs a valid GAIA-server configuration</p>
+
+    <h3>References</h3>
+    <ul>
+        <li><a href="https://api.sparkworks.net/swagger-ui.html#/">GAIA API</a> - used in this node</li>
+    </ul>
+</script>

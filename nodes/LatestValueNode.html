@@ -1,0 +1,81 @@
+<script type="text/javascript">
+    RED.nodes.registerType('LatestValue', {
+        category: 'Gaia',
+        color: '#92a95a',
+        defaults: {
+            name: {value: ""},
+            resource: {value: "", required: true},
+            server: {value: "", type: "gaia-server"},
+            copy: {value: true}
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "latest.png",
+        label: function () {
+            if (this.name)
+                return this.name + ":" + this.resource;
+            else
+                return "Latest Value:" + this.resource;
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="LatestValue">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-resource"><i class="fa fa-thermometer-half"></i> Resource</label>
+        <input type="text" id="node-input-resource" placeholder="ID or {{...}}">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-server"><i class="fa fa-server"></i> Gaia Server</label>
+        <input type="number" id="node-input-server" placeholder="Server">
+    </div>
+
+</script>
+
+<script type="text/html" data-help-name="LatestValue">
+    <p>Retrieves the latest value available on the GAIA Platform</p>
+
+    <h3>Parameters</h3>
+    <dl class="message-properties">
+        TODO
+    </dl>
+
+    <h3>Outputs</h3>
+
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">object</span></dt>
+        <dd>the response object containing:</dd>
+        <ul>
+            <li><code>uri</code> - Literal identifier of the resource</li>
+            <li><code>uom</code> - The Unit of measurement</li>
+            <li><code>latestTime</code> - The Timestamp of the measurement in milliseconds (UNIX time)</li>
+            <li><code>latest</code> - The latest value measured</li>
+            <li><code>latestMin5</code> - The averaged value during the latest 5 minutes</li>
+            <li><code>latestMin60</code> - The averaged value during the latest hour</li>
+            <li><code>latestDay</code> - The averaged value during the latest day</li>
+            <li><code>latestMonth</code> - The averaged value during the latest month</li>
+        </ul>
+
+        <dt>topic <span class="property-type">number</span></dt>
+        <dd>The id of the queried resource</dd>
+    </dl>
+
+
+    <h3>Details</h3>
+    <p>The queried resource can be configured within node writing directly its id (e.g. <code>155076</code>)
+        or by using mustache-style tags (e.g. <code>{{msg.payload.id}}</code> or <code>{{msg.payload.resource}}</code> for accessing the fields of the input
+        message)
+    </p>
+    <p>This node needs a valid GAIA-server configuration</p>
+
+    <h3>References</h3>
+    <ul>
+        <li><a href="https://api.sparkworks.net/swagger-ui.html#/">GAIA API</a> - used in this node</li>
+    </ul>
+</script>
