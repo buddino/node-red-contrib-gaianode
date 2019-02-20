@@ -24,7 +24,7 @@ npm install node-red-contrib-gaianode
 
 
 ## Available nodes
-- **LatestValue**: retrieves the latest value (with some additional informaion) of the resource identified by the id given to the node
+- **[LatestValue](#latestvalue)**: retrieves the latest value (with some additional informaion) of the resource identified by the id given to the node
 - **Summary**: retrieves the summary (latest value, averages, min, max, latest values at different granularities) of the resource identified by the id given to the node
 - **RealTime**: connects to the websocket output of the Gaia Platform allowing to receive real time unprocessed data as injected into the platform by the sensors
 - **Notifications**: connects to the websocket output of the Gaia Platform allowing to receive real time unprocessed data as injected into the platform by the sensors
