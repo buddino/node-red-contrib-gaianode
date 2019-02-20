@@ -91,10 +91,15 @@ Retrieves the values of the given resource within the specified time window.
 
 #### Parameters
 - **Resource id**: numerid id or a mustache-style string (e.g. {{msg.payload}})
-- **From**: a date and time or a mustache-style string (e.g. {{msg.payload.from}}) in the format *2010/08/17 12:09:36*
-- **To**: a date and time or a mustache-style string (e.g. {{msg.payload.to}}) in the format *2010/08/17 12:09:36*
-- **Granularity**: the interval between queried values (5 minutes, 1 hour, 1 day, 1 month)
+- **From**: a date and a time (if not provided by the input message)
+- **To**: a date and a time (if not provided by the input message)
+- **Granularity**: the interval between queried values (if not provided by the input message). Possible values are: *5 minutes*, *1 hour*, *1 day*, *1 month*
 - **Gaia Server**: a configured Gaia Server
+
+#### Input
+- **from**: date and time in the format *2010/08/17 12:09:36* or as UNIX timestamp
+- **to**: date and time in the format *2010/08/17 12:09:36* or as UNIX timestamp
+- **granularity**: Possible values are: *5 minutes*, *1 hour*, *1 day*, *1 month*
 
 #### Output
 - **payload** is a dictionary whose key are the ids of the requested resources *(currently only one resource at a time is supported)*
