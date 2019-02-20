@@ -25,13 +25,13 @@ npm install node-red-contrib-gaianode
 
 ## Available nodes
 - **[LatestValue](#latestvalue)**: retrieves the latest value (with some additional informaion) of the resource identified by the id given to the node
-- **Summary**: retrieves the summary (latest value, averages, min, max, latest values at different granularities) of the resource identified by the id given to the node
-- **RealTime**: connects to the websocket output of the Gaia Platform allowing to receive real time unprocessed data as injected into the platform by the sensors
-- **Notifications**: connects to the websocket output of the Gaia Platform allowing to receive real time unprocessed data as injected into the platform by the sensors
-- **ListResources**: list the resources (sensors) associated with the given site id
-- **Timerange**: retrieve the values in the specified time window at the specified granularity (5min, hour, day, month) for the given resource
-- **PushValue**: push a value into the Gaia Platform (a valid virtual sensor id is needed, see BMS manual for infromation)
-- **Uri2Id**: convert the given URI to a numeric resource id to be used with other GaiaNodes
+- **[Summary](#summary)**: retrieves the summary (latest value, averages, min, max, latest values at different granularities) of the resource identified by the id given to the node
+- **[RealTime](#realtime)**: connects to the websocket output of the Gaia Platform allowing to receive real time unprocessed data as injected into the platform by the sensors
+- **[Notifications](#notifications)**: connects to the websocket output of the Gaia Platform allowing to receive real time unprocessed data as injected into the platform by the sensors
+- **[ListResources](#listresources)**: list the resources (sensors) associated with the given site id
+- **[Timerange](#timerange)**: retrieve the values in the specified time window at the specified granularity (5min, hour, day, month) for the given resource
+- **[PushValue](#pushvalue)**: push a value into the Gaia Platform (a valid virtual sensor id is needed, see BMS manual for infromation)
+- **[Uri2Id](#uri2id)**: convert the given URI to a numeric resource id to be used with other GaiaNodes
 
 
 
