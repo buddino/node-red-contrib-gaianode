@@ -21,8 +21,6 @@ npm install node-red-contrib-gaianode
 ---
 
 
-
-
 ## Available nodes
 - **[LatestValue](#latestvalue)**: retrieves the latest value (with some additional informaion) of the resource identified by the id given to the node
 - **[Summary](#summary)**: retrieves the summary (latest value, averages, min, max, latest values at different granularities) of the resource identified by the id given to the node
@@ -77,14 +75,6 @@ Retrieves the summary for the given resource id from the GAIA Platform
   * max: Maximum value of the latest (5 minutes, hour, day, month)
   * max: Mean value of the latest (5 minutes, hour, day, month)
 - **topic**: The id of the queried resource
-
-
-
-
-
-
-
-
 
 ### Timerange
 Retrieves the values of the given resource within the specified time window.
